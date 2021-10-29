@@ -77,6 +77,37 @@ public final class GreetServiceGrpc {
     return getGreetManyTimesMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.rajni.grpc.greeting.LongGreetRequest,
+      com.rajni.grpc.greeting.LongGreetResponse> getLongGreetMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "LongGreet",
+      requestType = com.rajni.grpc.greeting.LongGreetRequest.class,
+      responseType = com.rajni.grpc.greeting.LongGreetResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+  public static io.grpc.MethodDescriptor<com.rajni.grpc.greeting.LongGreetRequest,
+      com.rajni.grpc.greeting.LongGreetResponse> getLongGreetMethod() {
+    io.grpc.MethodDescriptor<com.rajni.grpc.greeting.LongGreetRequest, com.rajni.grpc.greeting.LongGreetResponse> getLongGreetMethod;
+    if ((getLongGreetMethod = GreetServiceGrpc.getLongGreetMethod) == null) {
+      synchronized (GreetServiceGrpc.class) {
+        if ((getLongGreetMethod = GreetServiceGrpc.getLongGreetMethod) == null) {
+          GreetServiceGrpc.getLongGreetMethod = getLongGreetMethod =
+              io.grpc.MethodDescriptor.<com.rajni.grpc.greeting.LongGreetRequest, com.rajni.grpc.greeting.LongGreetResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "LongGreet"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.greeting.LongGreetRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.greeting.LongGreetResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new GreetServiceMethodDescriptorSupplier("LongGreet"))
+              .build();
+        }
+      }
+    }
+    return getLongGreetMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -126,6 +157,9 @@ public final class GreetServiceGrpc {
   public static abstract class GreetServiceImplBase implements io.grpc.BindableService {
 
     /**
+     * <pre>
+     *Unary
+     * </pre>
      */
     public void greet(com.rajni.grpc.greeting.GreetRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetResponse> responseObserver) {
@@ -133,10 +167,23 @@ public final class GreetServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Server Streaming
+     * </pre>
      */
     public void greetManyTimes(com.rajni.grpc.greeting.GreetManyTimesRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetManyTimesResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGreetManyTimesMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     *client Streaming
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.LongGreetRequest> longGreet(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.LongGreetResponse> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getLongGreetMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -155,6 +202,13 @@ public final class GreetServiceGrpc {
                 com.rajni.grpc.greeting.GreetManyTimesRequest,
                 com.rajni.grpc.greeting.GreetManyTimesResponse>(
                   this, METHODID_GREET_MANY_TIMES)))
+          .addMethod(
+            getLongGreetMethod(),
+            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+              new MethodHandlers<
+                com.rajni.grpc.greeting.LongGreetRequest,
+                com.rajni.grpc.greeting.LongGreetResponse>(
+                  this, METHODID_LONG_GREET)))
           .build();
     }
   }
@@ -174,6 +228,9 @@ public final class GreetServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Unary
+     * </pre>
      */
     public void greet(com.rajni.grpc.greeting.GreetRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetResponse> responseObserver) {
@@ -182,11 +239,25 @@ public final class GreetServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Server Streaming
+     * </pre>
      */
     public void greetManyTimes(com.rajni.grpc.greeting.GreetManyTimesRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetManyTimesResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncServerStreamingCall(
           getChannel().newCall(getGreetManyTimesMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     *client Streaming
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.LongGreetRequest> longGreet(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.LongGreetResponse> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
+          getChannel().newCall(getLongGreetMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -205,6 +276,9 @@ public final class GreetServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Unary
+     * </pre>
      */
     public com.rajni.grpc.greeting.GreetResponse greet(com.rajni.grpc.greeting.GreetRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -212,6 +286,9 @@ public final class GreetServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Server Streaming
+     * </pre>
      */
     public java.util.Iterator<com.rajni.grpc.greeting.GreetManyTimesResponse> greetManyTimes(
         com.rajni.grpc.greeting.GreetManyTimesRequest request) {
@@ -235,6 +312,9 @@ public final class GreetServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Unary
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.rajni.grpc.greeting.GreetResponse> greet(
         com.rajni.grpc.greeting.GreetRequest request) {
@@ -245,6 +325,7 @@ public final class GreetServiceGrpc {
 
   private static final int METHODID_GREET = 0;
   private static final int METHODID_GREET_MANY_TIMES = 1;
+  private static final int METHODID_LONG_GREET = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -281,6 +362,9 @@ public final class GreetServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_LONG_GREET:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.longGreet(
+              (io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.LongGreetResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -334,6 +418,7 @@ public final class GreetServiceGrpc {
               .setSchemaDescriptor(new GreetServiceFileDescriptorSupplier())
               .addMethod(getGreetMethod())
               .addMethod(getGreetManyTimesMethod())
+              .addMethod(getLongGreetMethod())
               .build();
         }
       }

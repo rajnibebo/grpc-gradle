@@ -46,6 +46,37 @@ public final class CalculatorServiceGrpc {
     return getSumMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.rajni.grpc.calculator.PrimeNumberDecompositionRequest,
+      com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> getPrimeNumberDecompositionFactorMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "primeNumberDecompositionFactor",
+      requestType = com.rajni.grpc.calculator.PrimeNumberDecompositionRequest.class,
+      responseType = com.rajni.grpc.calculator.PrimeNumberDecompositionResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.rajni.grpc.calculator.PrimeNumberDecompositionRequest,
+      com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> getPrimeNumberDecompositionFactorMethod() {
+    io.grpc.MethodDescriptor<com.rajni.grpc.calculator.PrimeNumberDecompositionRequest, com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> getPrimeNumberDecompositionFactorMethod;
+    if ((getPrimeNumberDecompositionFactorMethod = CalculatorServiceGrpc.getPrimeNumberDecompositionFactorMethod) == null) {
+      synchronized (CalculatorServiceGrpc.class) {
+        if ((getPrimeNumberDecompositionFactorMethod = CalculatorServiceGrpc.getPrimeNumberDecompositionFactorMethod) == null) {
+          CalculatorServiceGrpc.getPrimeNumberDecompositionFactorMethod = getPrimeNumberDecompositionFactorMethod =
+              io.grpc.MethodDescriptor.<com.rajni.grpc.calculator.PrimeNumberDecompositionRequest, com.rajni.grpc.calculator.PrimeNumberDecompositionResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "primeNumberDecompositionFactor"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.PrimeNumberDecompositionRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.PrimeNumberDecompositionResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new CalculatorServiceMethodDescriptorSupplier("primeNumberDecompositionFactor"))
+              .build();
+        }
+      }
+    }
+    return getPrimeNumberDecompositionFactorMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -101,6 +132,13 @@ public final class CalculatorServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSumMethod(), responseObserver);
     }
 
+    /**
+     */
+    public void primeNumberDecompositionFactor(com.rajni.grpc.calculator.PrimeNumberDecompositionRequest request,
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPrimeNumberDecompositionFactorMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -110,6 +148,13 @@ public final class CalculatorServiceGrpc {
                 com.rajni.grpc.calculator.CalculatorRequest,
                 com.rajni.grpc.calculator.CalculatorResponse>(
                   this, METHODID_SUM)))
+          .addMethod(
+            getPrimeNumberDecompositionFactorMethod(),
+            io.grpc.stub.ServerCalls.asyncServerStreamingCall(
+              new MethodHandlers<
+                com.rajni.grpc.calculator.PrimeNumberDecompositionRequest,
+                com.rajni.grpc.calculator.PrimeNumberDecompositionResponse>(
+                  this, METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR)))
           .build();
     }
   }
@@ -135,6 +180,14 @@ public final class CalculatorServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSumMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void primeNumberDecompositionFactor(com.rajni.grpc.calculator.PrimeNumberDecompositionRequest request,
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncServerStreamingCall(
+          getChannel().newCall(getPrimeNumberDecompositionFactorMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -156,6 +209,14 @@ public final class CalculatorServiceGrpc {
     public com.rajni.grpc.calculator.CalculatorResponse sum(com.rajni.grpc.calculator.CalculatorRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSumMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> primeNumberDecompositionFactor(
+        com.rajni.grpc.calculator.PrimeNumberDecompositionRequest request) {
+      return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
+          getChannel(), getPrimeNumberDecompositionFactorMethod(), getCallOptions(), request);
     }
   }
 
@@ -183,6 +244,7 @@ public final class CalculatorServiceGrpc {
   }
 
   private static final int METHODID_SUM = 0;
+  private static final int METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -204,6 +266,10 @@ public final class CalculatorServiceGrpc {
         case METHODID_SUM:
           serviceImpl.sum((com.rajni.grpc.calculator.CalculatorRequest) request,
               (io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.CalculatorResponse>) responseObserver);
+          break;
+        case METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR:
+          serviceImpl.primeNumberDecompositionFactor((com.rajni.grpc.calculator.PrimeNumberDecompositionRequest) request,
+              (io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -267,6 +333,7 @@ public final class CalculatorServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new CalculatorServiceFileDescriptorSupplier())
               .addMethod(getSumMethod())
+              .addMethod(getPrimeNumberDecompositionFactorMethod())
               .build();
         }
       }
