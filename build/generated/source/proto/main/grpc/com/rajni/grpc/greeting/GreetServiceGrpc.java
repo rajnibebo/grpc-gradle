@@ -108,6 +108,37 @@ public final class GreetServiceGrpc {
     return getLongGreetMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.rajni.grpc.greeting.GreetEveryOneRequest,
+      com.rajni.grpc.greeting.GreetEveryOneResponse> getGreetEveryoneMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GreetEveryone",
+      requestType = com.rajni.grpc.greeting.GreetEveryOneRequest.class,
+      responseType = com.rajni.grpc.greeting.GreetEveryOneResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+  public static io.grpc.MethodDescriptor<com.rajni.grpc.greeting.GreetEveryOneRequest,
+      com.rajni.grpc.greeting.GreetEveryOneResponse> getGreetEveryoneMethod() {
+    io.grpc.MethodDescriptor<com.rajni.grpc.greeting.GreetEveryOneRequest, com.rajni.grpc.greeting.GreetEveryOneResponse> getGreetEveryoneMethod;
+    if ((getGreetEveryoneMethod = GreetServiceGrpc.getGreetEveryoneMethod) == null) {
+      synchronized (GreetServiceGrpc.class) {
+        if ((getGreetEveryoneMethod = GreetServiceGrpc.getGreetEveryoneMethod) == null) {
+          GreetServiceGrpc.getGreetEveryoneMethod = getGreetEveryoneMethod =
+              io.grpc.MethodDescriptor.<com.rajni.grpc.greeting.GreetEveryOneRequest, com.rajni.grpc.greeting.GreetEveryOneResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GreetEveryone"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.greeting.GreetEveryOneRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.greeting.GreetEveryOneResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new GreetServiceMethodDescriptorSupplier("GreetEveryone"))
+              .build();
+        }
+      }
+    }
+    return getGreetEveryoneMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -186,6 +217,16 @@ public final class GreetServiceGrpc {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getLongGreetMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     *BIDI Streaming
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetEveryOneRequest> greetEveryone(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetEveryOneResponse> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getGreetEveryoneMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -209,6 +250,13 @@ public final class GreetServiceGrpc {
                 com.rajni.grpc.greeting.LongGreetRequest,
                 com.rajni.grpc.greeting.LongGreetResponse>(
                   this, METHODID_LONG_GREET)))
+          .addMethod(
+            getGreetEveryoneMethod(),
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
+              new MethodHandlers<
+                com.rajni.grpc.greeting.GreetEveryOneRequest,
+                com.rajni.grpc.greeting.GreetEveryOneResponse>(
+                  this, METHODID_GREET_EVERYONE)))
           .build();
     }
   }
@@ -258,6 +306,17 @@ public final class GreetServiceGrpc {
         io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.LongGreetResponse> responseObserver) {
       return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
           getChannel().newCall(getLongGreetMethod(), getCallOptions()), responseObserver);
+    }
+
+    /**
+     * <pre>
+     *BIDI Streaming
+     * </pre>
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetEveryOneRequest> greetEveryone(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetEveryOneResponse> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
+          getChannel().newCall(getGreetEveryoneMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -326,6 +385,7 @@ public final class GreetServiceGrpc {
   private static final int METHODID_GREET = 0;
   private static final int METHODID_GREET_MANY_TIMES = 1;
   private static final int METHODID_LONG_GREET = 2;
+  private static final int METHODID_GREET_EVERYONE = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -365,6 +425,9 @@ public final class GreetServiceGrpc {
         case METHODID_LONG_GREET:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.longGreet(
               (io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.LongGreetResponse>) responseObserver);
+        case METHODID_GREET_EVERYONE:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.greetEveryone(
+              (io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetEveryOneResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -419,6 +482,7 @@ public final class GreetServiceGrpc {
               .addMethod(getGreetMethod())
               .addMethod(getGreetManyTimesMethod())
               .addMethod(getLongGreetMethod())
+              .addMethod(getGreetEveryoneMethod())
               .build();
         }
       }

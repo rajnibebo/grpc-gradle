@@ -77,6 +77,37 @@ public final class CalculatorServiceGrpc {
     return getPrimeNumberDecompositionFactorMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.rajni.grpc.calculator.AverageRequest,
+      com.rajni.grpc.calculator.AverageResponse> getComputeAverageMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "computeAverage",
+      requestType = com.rajni.grpc.calculator.AverageRequest.class,
+      responseType = com.rajni.grpc.calculator.AverageResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+  public static io.grpc.MethodDescriptor<com.rajni.grpc.calculator.AverageRequest,
+      com.rajni.grpc.calculator.AverageResponse> getComputeAverageMethod() {
+    io.grpc.MethodDescriptor<com.rajni.grpc.calculator.AverageRequest, com.rajni.grpc.calculator.AverageResponse> getComputeAverageMethod;
+    if ((getComputeAverageMethod = CalculatorServiceGrpc.getComputeAverageMethod) == null) {
+      synchronized (CalculatorServiceGrpc.class) {
+        if ((getComputeAverageMethod = CalculatorServiceGrpc.getComputeAverageMethod) == null) {
+          CalculatorServiceGrpc.getComputeAverageMethod = getComputeAverageMethod =
+              io.grpc.MethodDescriptor.<com.rajni.grpc.calculator.AverageRequest, com.rajni.grpc.calculator.AverageResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "computeAverage"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.AverageRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.AverageResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new CalculatorServiceMethodDescriptorSupplier("computeAverage"))
+              .build();
+        }
+      }
+    }
+    return getComputeAverageMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -139,6 +170,13 @@ public final class CalculatorServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getPrimeNumberDecompositionFactorMethod(), responseObserver);
     }
 
+    /**
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageRequest> computeAverage(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageResponse> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getComputeAverageMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -155,6 +193,13 @@ public final class CalculatorServiceGrpc {
                 com.rajni.grpc.calculator.PrimeNumberDecompositionRequest,
                 com.rajni.grpc.calculator.PrimeNumberDecompositionResponse>(
                   this, METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR)))
+          .addMethod(
+            getComputeAverageMethod(),
+            io.grpc.stub.ServerCalls.asyncClientStreamingCall(
+              new MethodHandlers<
+                com.rajni.grpc.calculator.AverageRequest,
+                com.rajni.grpc.calculator.AverageResponse>(
+                  this, METHODID_COMPUTE_AVERAGE)))
           .build();
     }
   }
@@ -187,6 +232,14 @@ public final class CalculatorServiceGrpc {
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncServerStreamingCall(
           getChannel().newCall(getPrimeNumberDecompositionFactorMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageRequest> computeAverage(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageResponse> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
+          getChannel().newCall(getComputeAverageMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -245,6 +298,7 @@ public final class CalculatorServiceGrpc {
 
   private static final int METHODID_SUM = 0;
   private static final int METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR = 1;
+  private static final int METHODID_COMPUTE_AVERAGE = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -281,6 +335,9 @@ public final class CalculatorServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_COMPUTE_AVERAGE:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.computeAverage(
+              (io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -334,6 +391,7 @@ public final class CalculatorServiceGrpc {
               .setSchemaDescriptor(new CalculatorServiceFileDescriptorSupplier())
               .addMethod(getSumMethod())
               .addMethod(getPrimeNumberDecompositionFactorMethod())
+              .addMethod(getComputeAverageMethod())
               .build();
         }
       }
