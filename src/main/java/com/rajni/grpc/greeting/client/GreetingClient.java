@@ -5,6 +5,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +21,8 @@ public class GreetingClient {
       //  doUnaryCall(channel);
       //  doServerStreamCall(channel);
 
-        doClientStreaming(channel);
+       // doClientStreaming(channel);
+        doBiDiStreamingCall(channel);
 
     }
     public static void main(String[] args) throws InterruptedException {
@@ -114,5 +116,46 @@ public class GreetingClient {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void doBiDiStreamingCall(ManagedChannel channel) {
+        GreetServiceGrpc.GreetServiceStub serviceGrpc = GreetServiceGrpc.newStub(channel);
+
+        CountDownLatch latch = new CountDownLatch(1);
+        StreamObserver<GreetEveryOneRequest> requestObserver = serviceGrpc.greetEveryone(new StreamObserver<GreetEveryOneResponse>() {
+
+            @Override
+            public void onNext(GreetEveryOneResponse value) {
+                System.out.println("Server received response: "+value.getResult());
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onCompleted() {
+                latch.countDown();
+                System.out.println("Server finished executing all the streaming requests.");
+            }
+        });
+
+        // send the requests to server
+        Arrays.asList("John","Jessica", "Jerry").stream().forEach(name -> {
+            GreetEveryOneRequest request = GreetEveryOneRequest.newBuilder()
+                    .setGreet(Greeting.newBuilder()
+                            .setFirstName(name)
+                            .build())
+                    .build();
+
+            requestObserver.onNext(request);
+        });
+        try {
+            latch.await(10, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Client process finished..");
     }
 }

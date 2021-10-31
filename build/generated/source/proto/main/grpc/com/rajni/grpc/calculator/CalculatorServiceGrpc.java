@@ -108,6 +108,37 @@ public final class CalculatorServiceGrpc {
     return getComputeAverageMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.rajni.grpc.calculator.FindMaximumRequest,
+      com.rajni.grpc.calculator.FindMaximumResponse> getFindMaximumMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "findMaximum",
+      requestType = com.rajni.grpc.calculator.FindMaximumRequest.class,
+      responseType = com.rajni.grpc.calculator.FindMaximumResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+  public static io.grpc.MethodDescriptor<com.rajni.grpc.calculator.FindMaximumRequest,
+      com.rajni.grpc.calculator.FindMaximumResponse> getFindMaximumMethod() {
+    io.grpc.MethodDescriptor<com.rajni.grpc.calculator.FindMaximumRequest, com.rajni.grpc.calculator.FindMaximumResponse> getFindMaximumMethod;
+    if ((getFindMaximumMethod = CalculatorServiceGrpc.getFindMaximumMethod) == null) {
+      synchronized (CalculatorServiceGrpc.class) {
+        if ((getFindMaximumMethod = CalculatorServiceGrpc.getFindMaximumMethod) == null) {
+          CalculatorServiceGrpc.getFindMaximumMethod = getFindMaximumMethod =
+              io.grpc.MethodDescriptor.<com.rajni.grpc.calculator.FindMaximumRequest, com.rajni.grpc.calculator.FindMaximumResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "findMaximum"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.FindMaximumRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.FindMaximumResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new CalculatorServiceMethodDescriptorSupplier("findMaximum"))
+              .build();
+        }
+      }
+    }
+    return getFindMaximumMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -177,6 +208,13 @@ public final class CalculatorServiceGrpc {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getComputeAverageMethod(), responseObserver);
     }
 
+    /**
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumRequest> findMaximum(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumResponse> responseObserver) {
+      return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getFindMaximumMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -200,6 +238,13 @@ public final class CalculatorServiceGrpc {
                 com.rajni.grpc.calculator.AverageRequest,
                 com.rajni.grpc.calculator.AverageResponse>(
                   this, METHODID_COMPUTE_AVERAGE)))
+          .addMethod(
+            getFindMaximumMethod(),
+            io.grpc.stub.ServerCalls.asyncBidiStreamingCall(
+              new MethodHandlers<
+                com.rajni.grpc.calculator.FindMaximumRequest,
+                com.rajni.grpc.calculator.FindMaximumResponse>(
+                  this, METHODID_FIND_MAXIMUM)))
           .build();
     }
   }
@@ -240,6 +285,14 @@ public final class CalculatorServiceGrpc {
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageResponse> responseObserver) {
       return io.grpc.stub.ClientCalls.asyncClientStreamingCall(
           getChannel().newCall(getComputeAverageMethod(), getCallOptions()), responseObserver);
+    }
+
+    /**
+     */
+    public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumRequest> findMaximum(
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumResponse> responseObserver) {
+      return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
+          getChannel().newCall(getFindMaximumMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -299,6 +352,7 @@ public final class CalculatorServiceGrpc {
   private static final int METHODID_SUM = 0;
   private static final int METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR = 1;
   private static final int METHODID_COMPUTE_AVERAGE = 2;
+  private static final int METHODID_FIND_MAXIMUM = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -338,6 +392,9 @@ public final class CalculatorServiceGrpc {
         case METHODID_COMPUTE_AVERAGE:
           return (io.grpc.stub.StreamObserver<Req>) serviceImpl.computeAverage(
               (io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageResponse>) responseObserver);
+        case METHODID_FIND_MAXIMUM:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.findMaximum(
+              (io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -392,6 +449,7 @@ public final class CalculatorServiceGrpc {
               .addMethod(getSumMethod())
               .addMethod(getPrimeNumberDecompositionFactorMethod())
               .addMethod(getComputeAverageMethod())
+              .addMethod(getFindMaximumMethod())
               .build();
         }
       }
