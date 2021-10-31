@@ -139,6 +139,37 @@ public final class GreetServiceGrpc {
     return getGreetEveryoneMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.rajni.grpc.greeting.GreetRequestWithDeadline,
+      com.rajni.grpc.greeting.GreetResponseWithDeadline> getGreetWithDeadlineMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "GreetWithDeadline",
+      requestType = com.rajni.grpc.greeting.GreetRequestWithDeadline.class,
+      responseType = com.rajni.grpc.greeting.GreetResponseWithDeadline.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.rajni.grpc.greeting.GreetRequestWithDeadline,
+      com.rajni.grpc.greeting.GreetResponseWithDeadline> getGreetWithDeadlineMethod() {
+    io.grpc.MethodDescriptor<com.rajni.grpc.greeting.GreetRequestWithDeadline, com.rajni.grpc.greeting.GreetResponseWithDeadline> getGreetWithDeadlineMethod;
+    if ((getGreetWithDeadlineMethod = GreetServiceGrpc.getGreetWithDeadlineMethod) == null) {
+      synchronized (GreetServiceGrpc.class) {
+        if ((getGreetWithDeadlineMethod = GreetServiceGrpc.getGreetWithDeadlineMethod) == null) {
+          GreetServiceGrpc.getGreetWithDeadlineMethod = getGreetWithDeadlineMethod =
+              io.grpc.MethodDescriptor.<com.rajni.grpc.greeting.GreetRequestWithDeadline, com.rajni.grpc.greeting.GreetResponseWithDeadline>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GreetWithDeadline"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.greeting.GreetRequestWithDeadline.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.greeting.GreetResponseWithDeadline.getDefaultInstance()))
+              .setSchemaDescriptor(new GreetServiceMethodDescriptorSupplier("GreetWithDeadline"))
+              .build();
+        }
+      }
+    }
+    return getGreetWithDeadlineMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -227,6 +258,16 @@ public final class GreetServiceGrpc {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getGreetEveryoneMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     *RPC call with deadline of 500 ms
+     * </pre>
+     */
+    public void greetWithDeadline(com.rajni.grpc.greeting.GreetRequestWithDeadline request,
+        io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetResponseWithDeadline> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGreetWithDeadlineMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -257,6 +298,13 @@ public final class GreetServiceGrpc {
                 com.rajni.grpc.greeting.GreetEveryOneRequest,
                 com.rajni.grpc.greeting.GreetEveryOneResponse>(
                   this, METHODID_GREET_EVERYONE)))
+          .addMethod(
+            getGreetWithDeadlineMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.rajni.grpc.greeting.GreetRequestWithDeadline,
+                com.rajni.grpc.greeting.GreetResponseWithDeadline>(
+                  this, METHODID_GREET_WITH_DEADLINE)))
           .build();
     }
   }
@@ -318,6 +366,17 @@ public final class GreetServiceGrpc {
       return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getGreetEveryoneMethod(), getCallOptions()), responseObserver);
     }
+
+    /**
+     * <pre>
+     *RPC call with deadline of 500 ms
+     * </pre>
+     */
+    public void greetWithDeadline(com.rajni.grpc.greeting.GreetRequestWithDeadline request,
+        io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetResponseWithDeadline> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getGreetWithDeadlineMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -354,6 +413,16 @@ public final class GreetServiceGrpc {
       return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
           getChannel(), getGreetManyTimesMethod(), getCallOptions(), request);
     }
+
+    /**
+     * <pre>
+     *RPC call with deadline of 500 ms
+     * </pre>
+     */
+    public com.rajni.grpc.greeting.GreetResponseWithDeadline greetWithDeadline(com.rajni.grpc.greeting.GreetRequestWithDeadline request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getGreetWithDeadlineMethod(), getCallOptions(), request);
+    }
   }
 
   /**
@@ -380,12 +449,24 @@ public final class GreetServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGreetMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     *RPC call with deadline of 500 ms
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.rajni.grpc.greeting.GreetResponseWithDeadline> greetWithDeadline(
+        com.rajni.grpc.greeting.GreetRequestWithDeadline request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getGreetWithDeadlineMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_GREET = 0;
   private static final int METHODID_GREET_MANY_TIMES = 1;
-  private static final int METHODID_LONG_GREET = 2;
-  private static final int METHODID_GREET_EVERYONE = 3;
+  private static final int METHODID_GREET_WITH_DEADLINE = 2;
+  private static final int METHODID_LONG_GREET = 3;
+  private static final int METHODID_GREET_EVERYONE = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -411,6 +492,10 @@ public final class GreetServiceGrpc {
         case METHODID_GREET_MANY_TIMES:
           serviceImpl.greetManyTimes((com.rajni.grpc.greeting.GreetManyTimesRequest) request,
               (io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetManyTimesResponse>) responseObserver);
+          break;
+        case METHODID_GREET_WITH_DEADLINE:
+          serviceImpl.greetWithDeadline((com.rajni.grpc.greeting.GreetRequestWithDeadline) request,
+              (io.grpc.stub.StreamObserver<com.rajni.grpc.greeting.GreetResponseWithDeadline>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -483,6 +568,7 @@ public final class GreetServiceGrpc {
               .addMethod(getGreetManyTimesMethod())
               .addMethod(getLongGreetMethod())
               .addMethod(getGreetEveryoneMethod())
+              .addMethod(getGreetWithDeadlineMethod())
               .build();
         }
       }

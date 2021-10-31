@@ -22,7 +22,8 @@ public class GreetingClient {
       //  doServerStreamCall(channel);
 
        // doClientStreaming(channel);
-        doBiDiStreamingCall(channel);
+       // doBiDiStreamingCall(channel);
+        unaryCallWithDeadline(channel);
 
     }
     public static void main(String[] args) throws InterruptedException {
@@ -157,5 +158,28 @@ public class GreetingClient {
             e.printStackTrace();
         }
         System.out.println("Client process finished..");
+    }
+
+    public void unaryCallWithDeadline(ManagedChannel channel) {
+        System.out.println("Starting call using deadline from client to server");
+        GreetServiceGrpc.GreetServiceBlockingStub blockingStub = GreetServiceGrpc.newBlockingStub(channel)
+                .withDeadlineAfter(5000, TimeUnit.MILLISECONDS);
+
+        String result = blockingStub.greetWithDeadline(GreetRequestWithDeadline.newBuilder()
+                .setGreeting(Greeting.newBuilder().setFirstName("Rajni")).build()).getResult();
+        System.out.println("Received response from server: "+result);
+
+        try {
+            blockingStub = GreetServiceGrpc.newBlockingStub(channel)
+                    .withDeadlineAfter(100, TimeUnit.MILLISECONDS);
+
+           result = blockingStub.greetWithDeadline(GreetRequestWithDeadline.newBuilder()
+                    .setGreeting(Greeting.newBuilder().setFirstName("Rajni")).build()).getResult();
+            System.out.println("Received response from server: "+result);
+        } catch (Exception e) {
+            System.out.println("Deadline occurred.");
+            e.printStackTrace();
+        }
+
     }
 }

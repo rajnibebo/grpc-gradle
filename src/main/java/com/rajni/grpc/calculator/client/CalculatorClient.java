@@ -14,7 +14,7 @@ public class CalculatorClient {
     private ManagedChannel channel;
 
     public void run() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50551)
+        channel = ManagedChannelBuilder.forAddress("localhost", 50551)
                 .usePlaintext().build();
 
 //        doUnaryCall(channel);
@@ -140,4 +140,5 @@ public class CalculatorClient {
         }
 
     }
+
 }

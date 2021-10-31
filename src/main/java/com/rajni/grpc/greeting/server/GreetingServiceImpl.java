@@ -1,6 +1,7 @@
 package com.rajni.grpc.greeting.server;
 
 import com.rajni.grpc.greeting.*;
+import io.grpc.Context;
 import io.grpc.stub.StreamObserver;
 
 import java.util.concurrent.TimeUnit;
@@ -86,5 +87,24 @@ public class GreetingServiceImpl extends GreetServiceGrpc.GreetServiceImplBase {
         };
 
         return greetObserver;
+    }
+
+    @Override
+    public void greetWithDeadline(GreetRequestWithDeadline request, StreamObserver<GreetResponseWithDeadline> responseObserver) {
+        String firstName = request.getGreeting().getFirstName();
+
+        Context context = Context.current();
+        try {
+            if(!context.isCancelled()) {
+                TimeUnit.MILLISECONDS.sleep(1000);
+            } else {
+                return;
+            }
+            System.out.println("Sending response to client after checking deadlines.");
+            responseObserver.onNext(GreetResponseWithDeadline.newBuilder().setResult("Hello, "+firstName).build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
