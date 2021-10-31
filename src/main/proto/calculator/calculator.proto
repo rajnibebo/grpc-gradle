@@ -43,10 +43,28 @@ message FindMaximumResponse {
   int32 response = 1;
 }
 
+message SquareRootRequest {
+  int32 number = 1;
+}
+
+message SquareRootResponse {
+  double number_root = 1;
+}
+
 service CalculatorService {
+  //Unary call
   rpc sum(CalculatorRequest) returns (CalculatorResponse) {};
+
+  //Server Stream call
   rpc primeNumberDecompositionFactor(PrimeNumberDecompositionRequest) returns (stream PrimeNumberDecompositionResponse) {};
+
+  //Client Stream call
   rpc computeAverage(stream AverageRequest) returns (AverageResponse) {};
 
+  //Client Stream and Server stream call
   rpc findMaximum(stream FindMaximumRequest) returns (stream FindMaximumResponse) {};
+
+  //error handling
+  //This will throw exception for negative numbers
+  rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
 }

@@ -139,6 +139,37 @@ public final class CalculatorServiceGrpc {
     return getFindMaximumMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.rajni.grpc.calculator.SquareRootRequest,
+      com.rajni.grpc.calculator.SquareRootResponse> getSquareRootMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SquareRoot",
+      requestType = com.rajni.grpc.calculator.SquareRootRequest.class,
+      responseType = com.rajni.grpc.calculator.SquareRootResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.rajni.grpc.calculator.SquareRootRequest,
+      com.rajni.grpc.calculator.SquareRootResponse> getSquareRootMethod() {
+    io.grpc.MethodDescriptor<com.rajni.grpc.calculator.SquareRootRequest, com.rajni.grpc.calculator.SquareRootResponse> getSquareRootMethod;
+    if ((getSquareRootMethod = CalculatorServiceGrpc.getSquareRootMethod) == null) {
+      synchronized (CalculatorServiceGrpc.class) {
+        if ((getSquareRootMethod = CalculatorServiceGrpc.getSquareRootMethod) == null) {
+          CalculatorServiceGrpc.getSquareRootMethod = getSquareRootMethod =
+              io.grpc.MethodDescriptor.<com.rajni.grpc.calculator.SquareRootRequest, com.rajni.grpc.calculator.SquareRootResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SquareRoot"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.SquareRootRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.rajni.grpc.calculator.SquareRootResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new CalculatorServiceMethodDescriptorSupplier("SquareRoot"))
+              .build();
+        }
+      }
+    }
+    return getSquareRootMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -188,6 +219,9 @@ public final class CalculatorServiceGrpc {
   public static abstract class CalculatorServiceImplBase implements io.grpc.BindableService {
 
     /**
+     * <pre>
+     *Unary call
+     * </pre>
      */
     public void sum(com.rajni.grpc.calculator.CalculatorRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.CalculatorResponse> responseObserver) {
@@ -195,6 +229,9 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Server Stream call
+     * </pre>
      */
     public void primeNumberDecompositionFactor(com.rajni.grpc.calculator.PrimeNumberDecompositionRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> responseObserver) {
@@ -202,6 +239,9 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Client Stream call
+     * </pre>
      */
     public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageRequest> computeAverage(
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageResponse> responseObserver) {
@@ -209,10 +249,24 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Client Stream and Server stream call
+     * </pre>
      */
     public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumRequest> findMaximum(
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumResponse> responseObserver) {
       return io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall(getFindMaximumMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     *error handling
+     *This will throw exception for negative numbers
+     * </pre>
+     */
+    public void squareRoot(com.rajni.grpc.calculator.SquareRootRequest request,
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.SquareRootResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSquareRootMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -245,6 +299,13 @@ public final class CalculatorServiceGrpc {
                 com.rajni.grpc.calculator.FindMaximumRequest,
                 com.rajni.grpc.calculator.FindMaximumResponse>(
                   this, METHODID_FIND_MAXIMUM)))
+          .addMethod(
+            getSquareRootMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+              new MethodHandlers<
+                com.rajni.grpc.calculator.SquareRootRequest,
+                com.rajni.grpc.calculator.SquareRootResponse>(
+                  this, METHODID_SQUARE_ROOT)))
           .build();
     }
   }
@@ -264,6 +325,9 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Unary call
+     * </pre>
      */
     public void sum(com.rajni.grpc.calculator.CalculatorRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.CalculatorResponse> responseObserver) {
@@ -272,6 +336,9 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Server Stream call
+     * </pre>
      */
     public void primeNumberDecompositionFactor(com.rajni.grpc.calculator.PrimeNumberDecompositionRequest request,
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> responseObserver) {
@@ -280,6 +347,9 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Client Stream call
+     * </pre>
      */
     public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageRequest> computeAverage(
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.AverageResponse> responseObserver) {
@@ -288,11 +358,26 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Client Stream and Server stream call
+     * </pre>
      */
     public io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumRequest> findMaximum(
         io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.FindMaximumResponse> responseObserver) {
       return io.grpc.stub.ClientCalls.asyncBidiStreamingCall(
           getChannel().newCall(getFindMaximumMethod(), getCallOptions()), responseObserver);
+    }
+
+    /**
+     * <pre>
+     *error handling
+     *This will throw exception for negative numbers
+     * </pre>
+     */
+    public void squareRoot(com.rajni.grpc.calculator.SquareRootRequest request,
+        io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.SquareRootResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSquareRootMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -311,6 +396,9 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Unary call
+     * </pre>
      */
     public com.rajni.grpc.calculator.CalculatorResponse sum(com.rajni.grpc.calculator.CalculatorRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -318,11 +406,25 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Server Stream call
+     * </pre>
      */
     public java.util.Iterator<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse> primeNumberDecompositionFactor(
         com.rajni.grpc.calculator.PrimeNumberDecompositionRequest request) {
       return io.grpc.stub.ClientCalls.blockingServerStreamingCall(
           getChannel(), getPrimeNumberDecompositionFactorMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     *error handling
+     *This will throw exception for negative numbers
+     * </pre>
+     */
+    public com.rajni.grpc.calculator.SquareRootResponse squareRoot(com.rajni.grpc.calculator.SquareRootRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSquareRootMethod(), getCallOptions(), request);
     }
   }
 
@@ -341,18 +443,34 @@ public final class CalculatorServiceGrpc {
     }
 
     /**
+     * <pre>
+     *Unary call
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.rajni.grpc.calculator.CalculatorResponse> sum(
         com.rajni.grpc.calculator.CalculatorRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getSumMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     *error handling
+     *This will throw exception for negative numbers
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.rajni.grpc.calculator.SquareRootResponse> squareRoot(
+        com.rajni.grpc.calculator.SquareRootRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSquareRootMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_SUM = 0;
   private static final int METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR = 1;
-  private static final int METHODID_COMPUTE_AVERAGE = 2;
-  private static final int METHODID_FIND_MAXIMUM = 3;
+  private static final int METHODID_SQUARE_ROOT = 2;
+  private static final int METHODID_COMPUTE_AVERAGE = 3;
+  private static final int METHODID_FIND_MAXIMUM = 4;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -378,6 +496,10 @@ public final class CalculatorServiceGrpc {
         case METHODID_PRIME_NUMBER_DECOMPOSITION_FACTOR:
           serviceImpl.primeNumberDecompositionFactor((com.rajni.grpc.calculator.PrimeNumberDecompositionRequest) request,
               (io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.PrimeNumberDecompositionResponse>) responseObserver);
+          break;
+        case METHODID_SQUARE_ROOT:
+          serviceImpl.squareRoot((com.rajni.grpc.calculator.SquareRootRequest) request,
+              (io.grpc.stub.StreamObserver<com.rajni.grpc.calculator.SquareRootResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -450,6 +572,7 @@ public final class CalculatorServiceGrpc {
               .addMethod(getPrimeNumberDecompositionFactorMethod())
               .addMethod(getComputeAverageMethod())
               .addMethod(getFindMaximumMethod())
+              .addMethod(getSquareRootMethod())
               .build();
         }
       }

@@ -3,6 +3,7 @@ package com.rajni.grpc.calculator.client;
 import com.rajni.grpc.calculator.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
 import java.util.Arrays;
@@ -16,10 +17,12 @@ public class CalculatorClient {
         ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50551)
                 .usePlaintext().build();
 
-        doUnaryCall(channel);
-        doClientStreamCall(channel);
-        doServerStreamCall(channel);
-        doBIDIStreamCall(channel);
+//        doUnaryCall(channel);
+//        doClientStreamCall(channel);
+//        doServerStreamCall(channel);
+//        doBIDIStreamCall(channel);
+
+        doErrorCall(channel);
 
         channel.shutdown();
     }
@@ -122,6 +125,17 @@ public class CalculatorClient {
         try {
             newLatch.await();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void doErrorCall(ManagedChannel channel) {
+        CalculatorServiceGrpc.CalculatorServiceBlockingStub stub = CalculatorServiceGrpc.newBlockingStub(channel);
+        try {
+            SquareRootResponse squareRootResponse = stub.squareRoot(SquareRootRequest.newBuilder().setNumber(-1).build());
+        } catch (StatusRuntimeException e) {
+            System.out.println("An exception was thrown on the stub.");
             e.printStackTrace();
         }
 

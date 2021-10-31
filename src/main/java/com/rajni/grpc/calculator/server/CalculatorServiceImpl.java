@@ -1,6 +1,7 @@
 package com.rajni.grpc.calculator.server;
 
 import com.rajni.grpc.calculator.*;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServiceImplBase {
@@ -89,5 +90,22 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
         };
 
         return requestStreamObserver;
+    }
+
+    @Override
+    public void squareRoot(SquareRootRequest request, StreamObserver<SquareRootResponse> responseObserver) {
+        int number = request.getNumber();
+        System.out.println("Number for which we have to find the square root is: "+number);
+        if(number >= 0) {
+            double squareRoot = Math.sqrt(number);
+            responseObserver.onNext(SquareRootResponse.newBuilder().setNumberRoot(squareRoot).build());
+        } else {
+            responseObserver.onError(
+                    Status.INVALID_ARGUMENT
+                    .withDescription("The number being sent is not positive")
+                    .augmentDescription("Additional information on this exception: Number: "+number)
+                    .asRuntimeException()
+            );
+        }
     }
 }
