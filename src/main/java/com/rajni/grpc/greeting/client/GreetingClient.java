@@ -3,8 +3,11 @@ package com.rajni.grpc.greeting.client;
 import com.rajni.grpc.greeting.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
@@ -23,7 +26,19 @@ public class GreetingClient {
 
        // doClientStreaming(channel);
        // doBiDiStreamingCall(channel);
-        unaryCallWithDeadline(channel);
+      //  unaryCallWithDeadline(channel);
+
+        try {
+            ManagedChannel securedChannel = NettyChannelBuilder.forAddress("localhost",50051)
+                    .sslContext(GrpcSslContexts.forClient().trustManager(new File("ssh/ca.crt")).build())
+                    .build();
+
+            doUnaryCall(securedChannel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
     }
     public static void main(String[] args) throws InterruptedException {

@@ -3,6 +3,7 @@ package com.rajni.grpc.greeting.server;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 
+import java.io.File;
 import java.io.IOException;
 
 public class GreetingServer {
@@ -10,7 +11,9 @@ public class GreetingServer {
         System.out.println("Hello, This is from greeting service");
 
         Server server = ServerBuilder.forPort(50051)
-                .addService(new GreetingServiceImpl()).build();
+                .addService(new GreetingServiceImpl())
+                .useTransportSecurity(new File("ssh/server.crt"), new File("ssh/server.pem"))
+                .build();
         server.start();
 
         System.out.println("Server has been started successfully");
