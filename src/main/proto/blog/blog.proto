@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package blog;
+
+option java_package = "com.rajni.grpc.blog";
+option java_multiple_files = true;
+
+message Blog {
+  string id = 1;
+  string author_id = 2;
+  string title = 3;
+  string content = 4;
+}
+
+message BlogRequest {
+  Blog blog_request = 1;
+}
+
+message BlogResponse {
+  Blog blog_response = 1;
+}
+
+message ReadBlogRequest {
+  string blog_id = 1;
+}
+
+message ReadBlogResponse {
+  Blog blog = 1;
+}
+
+message UpdateBlogRequest {
+  Blog blog = 1;
+}
+message UpdateBlogResponse {
+  Blog blog = 1;
+}
+
+message DeleteBlogRequest {
+    string blog_id = 1;
+}
+
+message DeleteBlogResponse {
+  Blog blog = 1;
+}
+
+message ListBlogRequest {
+
+}
+
+message ListBlogResponse {
+  Blog response = 1;
+}
+service BlogService {
+  rpc CreateBlog(BlogRequest) returns (BlogResponse) {};
+
+  rpc ReadBlog(ReadBlogRequest) returns (ReadBlogResponse) {};
+
+  rpc UpdateBlog(UpdateBlogRequest) returns (UpdateBlogResponse) {};
+
+  rpc DeleteBlog(DeleteBlogRequest) returns (DeleteBlogResponse) {};
+
+  rpc ListBlog(ListBlogRequest) returns (stream ListBlogResponse) {};
+}
